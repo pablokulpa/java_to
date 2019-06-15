@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:bookStore xmlns:ns2="de.vogella.xml.jaxb.model">
+    <bookData>
+        <age>3</age>
+        <author>data</author>
+        <id>4</id>
+        <name>ala</name>
+        <print>kot</print>
+    </bookData>
+</ns2:bookStore>

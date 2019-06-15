@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <title>File Upload</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+    @import "compass/css3"
+    body {
+        margin: 0 auto;
+        max-width: 550px;
+        padding-top: 3em;
+    }
+    .body-color {
+        background-color: rgb(170, 167, 167);
+        color: white;
+    }
+
+    section + section {
+        margin-top: 2em;
+    }
+
+    small {
+        color: rgba(0, 0, 0, 0.45);
+        display: block;
+        margin-top: 1em;
+    }
+
+    section button:hover, section .file [type="file"]:hover + div button {
+        background-color: #245682;
+    }
+
+    section button {
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        border-radius: 0px;
+        background-color: #428BCA;
+        border: 0px solid rgba(0, 0, 0, 0.3);
+        border-bottom-width: 1px;
+        color: #fff;
+        display: inline-block;
+        margin: 0;
+        padding: 0 .75em;
+    }
+
+    section label {
+        clear: both;
+        display: inline-block;
+        margin-bottom: 3px;
+    }
+    section button,
+    section .file {
+        font-size: 14px;
+        line-height: 2em;
+    }
+    section .file {
+        background-color: #ccc;
+        display: inline-block;
+        overflow: hidden;
+        padding-right: 4em;
+        position: relative;
+        vertical-align: top;
+    }
+    section .file input,
+    section .file ::-webkit-file-upload-button {
+        cursor: pointer !important;
+    }
+    section .file [type="text"] {
+        background-color: transparent;
+        border-width: 0px;
+        color: rgba(0, 0, 0, 0.5);
+        margin-left: .5em;
+    }
+    section .file [type="file"] {
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+        opacity: 0;
+        height: 100%;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .ui-select {
+        background-color: #ccc;
+        display: inline-block;
+        position: relative;
+    }
+    .ui-select:after {
+        background-color: #ccc;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        content: '';
+        width: 10px;
+    }
+    .ui-select select {
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        border-width: 0;
+        background: transparent;
+        padding: 5px 10px;
+    }
+    .main {
+        margin: 0 auto;
+        width: 460px;
+        padding: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+    .upimg {
+        width: 25px;
+        margin: 0 auto;
+    }
+    .header {
+        font-family:'Courier New';
+        font-weight: bold;
+        font-size: 30px;
+    }
+    .form {
+        margin: 0 auto;
+        width: 424px;
+    }
+    small {
+        width: 50%;
+        margin: 0 auto;
+    }
+    .container {
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        border-radius: 50%;
+    }
+    .container:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+    .container input:checked ~ .checkmark {
+        background-color: #2196F3;
+    }
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+    .container input:checked ~ .checkmark:after {
+        display: block;
+    }
+    .container .checkmark:after {
+        top: 9px;
+        left: 9px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
+    }
+    .but-dow {
+
+    }
+    </style>
+</head>
+<body class="body-color">
+<div class="main">
+    <div class="header"><img class="upimg" src="https://img.icons8.com/metro/1600/upload.png"> Konwerter plików online</div>
+    <section>
+            <form method="POST" action="uploaded" enctype="multipart/form-data" class="form">
+                <input type="file" name="file" id="file"  />
+                <button class="upload" type="submit" value="Upload" name="upload" id="upload" >Upload File</button>
+               <!-- <button class="reset" type="reset">Reset</button>-->
+            </form>
+
+        <small>Dostępne formaty plików: xml, txt, doc</small>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+         $.fn.filestyle = function (options) {
+          var settings = $.extend(
+            {
+              fieldText: 'No File Selected',
+              buttonText: 'Select File',
+              wrapClass:   'file',
+              wrapContent: '<div class="file"></div>',
+              fakeContent: '<div class="fake"><button></button><input type="text" disabled="disabled" class="filename" /></div>'
+            },
+            options
+          );
+
+          // init
+          $(this).wrap(settings.wrapContent)
+          .after(settings.fakeContent)
+          .on('change.file', function () {
+            var val = $(this).val().split('\\');
+            $(this).next().find('.filename').val(val.slice(-1)[0]);
+          });
+          $(this).next().find('.filename').val(settings.fieldText);
+          $(this).next().find('button').text(settings.buttonText);
+          return this;
+        };
+
+        $('[type="file"]').filestyle({
+          fieldText: 'Nie wybrano pliku', // NAME
+          buttonText: 'Wybierz plik'
+        });
+    </script>
+</div>
+</body>
+</html>

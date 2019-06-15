@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <title>File Upload</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+    @import "compass/css3"
+    body {
+        margin: 0 auto;
+        max-width: 550px;
+        padding-top: 3em;
+    }
+    .body-color {
+        background-color: rgb(170, 167, 167);
+        color: white;
+    }
+
+    section + section {
+        margin-top: 2em;
+    }
+
+    small {
+        color: rgba(0, 0, 0, 0.45);
+        display: block;
+        margin-top: 1em;
+    }
+
+    section button:hover, section .file [type="file"]:hover + div button {
+        background-color: #245682;
+    }
+
+    section button {
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        border-radius: 0px;
+        background-color: #428BCA;
+        border: 0px solid rgba(0, 0, 0, 0.3);
+        border-bottom-width: 1px;
+        color: #fff;
+        display: inline-block;
+        margin: 0;
+        padding: 0 .75em;
+    }
+
+    section label {
+        clear: both;
+        display: inline-block;
+        margin-bottom: 3px;
+    }
+    section button,
+    section .file {
+        font-size: 14px;
+        line-height: 2em;
+    }
+    section .file {
+        background-color: #ccc;
+        display: inline-block;
+        overflow: hidden;
+        padding-right: 4em;
+        position: relative;
+        vertical-align: top;
+    }
+    section .file input,
+    section .file ::-webkit-file-upload-button {
+        cursor: pointer !important;
+    }
+    section .file [type="text"] {
+        background-color: transparent;
+        border-width: 0px;
+        color: rgba(0, 0, 0, 0.5);
+        margin-left: .5em;
+    }
+    section .file [type="file"] {
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+        opacity: 0;
+        height: 100%;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .ui-select {
+        background-color: #ccc;
+        display: inline-block;
+        position: relative;
+    }
+    .ui-select:after {
+        background-color: #ccc;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        content: '';
+        width: 10px;
+    }
+    .ui-select select {
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        border-width: 0;
+        background: transparent;
+        padding: 5px 10px;
+    }
+    .main {
+        margin: 0 auto;
+        width: 460px;
+        padding: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+    .upimg {
+        width: 25px;
+        margin: 0 auto;
+    }
+    .header {
+        font-family:'Courier New';
+        font-weight: bold;
+        font-size: 30px;
+    }
+    .form {
+        margin: 0 auto;
+        width: 424px;
+    }
+    small {
+        width: 50%;
+        margin: 0 auto;
+    }
+    .container {
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        border-radius: 50%;
+    }
+    .container:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+    .container input:checked ~ .checkmark {
+        background-color: #2196F3;
+    }
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+    .container input:checked ~ .checkmark:after {
+        display: block;
+    }
+    .container .checkmark:after {
+        top: 9px;
+        left: 9px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
+    }
+    .but-dow {
+
+    }
+    </style>
+</head>
+<body class="body-color">
+<table class="main">
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>AUTHOR</th>
+    </tr>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.name}"></td>
+        <td th:text="${book.author}"></td>
+    </tr>
+</table>
+
+<form method="get" action="converted">
+    <!-- Make sure to always set a value for attributes when using thymeleaf (use checked="checked" instead of checked) -->
+    <section style="width: 300px; margin: 0 auto; padding-top: 20px;">
+        <label class="container">XML
+            <input type="radio" name="format" value="xml" checked="checked" />
+            <span class="checkmark"></span>
+        </label>
+        <label class="container">TXT
+            <input type="radio" name="format" value="txt" />
+            <span class="checkmark"></span>
+        </label>
+        <label class="container">BIBTEXT
+            <input type="radio" name="format" value="bibtext" />
+            <span class="checkmark"></span>
+        </label>
+        <div class="but-dow"><button type="submit" value="convert" name="txt" id="2" style="width: 100%"/>Convert</button></div>
+    </section>
+</form>
+
+</body>
+</html>
