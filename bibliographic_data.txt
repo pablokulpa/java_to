@@ -1,0 +1,6 @@
+ala,kot,data,3,4
+ala,kot,data,3,4
+ala,kot,data,3,4
+ala,kot,data,3,4
+ala,kot,data,3,4
+ala,kot,data,3,4
